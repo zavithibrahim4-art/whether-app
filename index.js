@@ -1,4 +1,3 @@
-//api key
 const apiKey = "5cb516159f08bb9a43343edd928d3feb";
 
 const cityInput = document.getElementById("city-input");
@@ -13,11 +12,14 @@ const feelsLike = document.getElementById("feels-like");
 const appScreen = document.getElementById("app-screen");
 const weatherEmoji = document.getElementById("weather-emoji");
 
-//event listener
 cityInput.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
-    const cityToSearch = cityInput.value;
-    getWeatherData(cityToSearch);
+    const city = cityInput.value.trim();
+
+    if (city !== "") {
+      getWeatherData(city);
+    }
+
     cityInput.value = "";
   }
 });
@@ -33,12 +35,14 @@ async function getWeatherData(city) {
 
     const response = await fetch(url);
 
-    if (response.ok === false) {
-      alert("City not found. Please try again!");
+    if (!response.ok) {
+      alert("City not found!");
       return;
     }
 
     const data = await response.json();
+
+    console.log(data);
 
     updateUI(data);
   } catch (error) {
@@ -57,17 +61,16 @@ function updateUI(data) {
   const sunriseTime = data.sys.sunrise;
   const sunsetTime = data.sys.sunset;
 
-  let isDayTime = false;
-  if (currentTime >= sunriseTime && currentTime < sunsetTime) {
-    isDayTime = true;
-  }
+  const isDayTime =
+    currentTime >= sunriseTime && currentTime < sunsetTime;
 
   cityName.innerText = name;
   mainTemp.innerText = temp + "°C";
-  windSpeed.innerText = wind + "m/s";
+  windSpeed.innerText = wind + " m/s";
   feelsLike.innerText = feels + "°";
 
-  const dateObj = new Date();
+  const cityDate = new Date((data.dt + data.timezone) * 1000);
+
   const days = [
     "SUNDAY",
     "MONDAY",
@@ -77,21 +80,26 @@ function updateUI(data) {
     "FRIDAY",
     "SATURDAY",
   ];
-  const dayName = days[dateObj.getDay()];
 
-  let hours = dateObj.getHours();
-  let minutes = dateObj.getMinutes();
+  const dayName = days[cityDate.getUTCDay()];
+
+  let hours = cityDate.getUTCHours();
+  let minutes = cityDate.getUTCMinutes();
+
   let ampm = "AM";
 
   if (hours >= 12) {
     ampm = "PM";
   }
+
   if (hours > 12) {
-    hours = hours - 12;
+    hours -= 12;
   }
+
   if (hours === 0) {
     hours = 12;
   }
+
   if (minutes < 10) {
     minutes = "0" + minutes;
   }
@@ -102,25 +110,42 @@ function updateUI(data) {
     appScreen.classList.remove("night-mode");
     greeting.innerText = "GOOD MORNING";
     sunLabel.innerText = "SUNSET";
-    sunTime.innerText = formatUnixTime(sunsetTime);
+    sunTime.innerText = formatUnixTime(sunsetTime, data.timezone);
     setWeatherIcon(data.weather[0].id, true);
   } else {
     appScreen.classList.add("night-mode");
     greeting.innerText = "GOOD NIGHT";
     sunLabel.innerText = "SUNRISE";
-    sunTime.innerText = formatUnixTime(sunriseTime);
+    sunTime.innerText = formatUnixTime(sunriseTime, data.timezone);
     setWeatherIcon(data.weather[0].id, false);
   }
 }
 
-function formatUnixTime(unixTime) {
-  const date = new Date(unixTime * 1000);
-  let h = date.getHours();
-  let m = date.getMinutes();
-  if (h > 12) h = h - 12;
-  if (h === 0) h = 12;
-  if (m < 10) m = "0" + m;
-  return h + ":" + m;
+function formatUnixTime(unixTime, timezone) {
+  const date = new Date((unixTime + timezone) * 1000);
+
+  let hours = date.getUTCHours();
+  let minutes = date.getUTCMinutes();
+
+  let ampm = "AM";
+
+  if (hours >= 12) {
+    ampm = "PM";
+  }
+
+  if (hours > 12) {
+    hours -= 12;
+  }
+
+  if (hours === 0) {
+    hours = 12;
+  }
+
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+
+  return hours + ":" + minutes + " " + ampm;
 }
 
 function setWeatherIcon(weatherId, isDay) {
@@ -131,17 +156,9 @@ function setWeatherIcon(weatherId, isDay) {
   } else if (weatherId >= 600 && weatherId < 700) {
     emoji = "❄️";
   } else if (weatherId === 800) {
-    if (isDay) {
-      emoji = "☀️";
-    } else {
-      emoji = "🌙";
-    }
+    emoji = isDay ? "☀️" : "🌙";
   } else if (weatherId > 800) {
-    if (isDay) {
-      emoji = "⛅";
-    } else {
-      emoji = "☁️";
-    }
+    emoji = isDay ? "⛅" : "☁️";
   }
 
   weatherEmoji.innerText = emoji;
