@@ -1,0 +1,77 @@
+body {
+  font-family: "Quicksand", sans-serif;
+  background-color: #e2e8f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.phone-container {
+  width: 340px;
+  height: 720px;
+  background-color: #f4f6f9;
+  color: #333333;
+  border-radius: 45px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+  border: 8px solid #1a1a1a;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+}
+
+.phone-container.night-mode {
+  background-color: #2e3341;
+  color: #f4f6f9;
+}
+
+.search-box {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+  color: inherit;
+  font-size: 1rem;
+  text-align: center;
+  padding: 5px;
+  outline: none;
+  width: 80%;
+  margin: 0 auto 20px auto;
+  display: block;
+}
+
+.search-box::placeholder {
+  color: rgba(128, 128, 128, 0.6);
+}
+
+.weather-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 180px;
+  margin: 20px 0;
+}
+
+.divider {
+  height: 1px;
+  width: 30px;
+  margin: 15px auto;
+  opacity: 0.3;
+}
+
+.notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 25px;
+  background-color: #1a1a1a;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}

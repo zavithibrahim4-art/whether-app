@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beautiful Weather App</title>
+    <!-- We import a font called Quicksand to match the thin, round font in your image -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Tailwind CSS for layout styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+  </head>
+  <body>
+    <!-- This is the main phone screen -->
+    <div id="app-screen" class="phone-container">
+      <div class="notch"></div>
+
+      <!-- Top Menu Icon -->
+      <div class="flex justify-between items-center mt-4">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="5" r="1.5" fill="currentColor" />
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+          <circle cx="12" cy="19" r="1.5" fill="currentColor" />
+        </svg>
+      </div>
+
+     
+      <input
+        type="text"
+        id="city-input"
+        class="search-box"
+        placeholder="Enter the city name"
+      />
+
+      <!-- Header: City and Date -->
+      <div class="text-center mt-2">
+        <h1 id="city-name" class="text-4xl font-light tracking-wide">
+          Karachi
+        </h1>
+        <p
+          id="date-time"
+          class="text-xs font-bold uppercase tracking-widest mt-2 opacity-70"
+        >
+          MONDAY 7:00 AM
+        </p>
+      </div>
+
+      <!-- Weather Icon (Sun or Moon) -->
+      <div class="weather-icon-container" id="icon-container">
+        <!-- Default placeholder text, will be replaced by SVG icons in JavaScript -->
+        <p id="weather-emoji" class="text-8xl">⛅</p>
+      </div>
+
+      <!-- Temperature and Greeting -->
+      <div class="text-center mt-4">
+        <h2 id="main-temp" class="text-6xl font-light">22°C</h2>
+        <p
+          id="greeting"
+          class="text-sm font-bold uppercase tracking-widest mt-4 opacity-70"
+        >
+          GOOD MORNING
+        </p>
+        <p class="text-sm uppercase tracking-widest opacity-70">Sheik</p>
+        <div class="divider"></div>
+      </div>
+
+      <!-- Bottom Stats Row -->
+      <div
+        class="flex justify-between items-center text-center mt-auto mb-6 px-4"
+      >
+        <!-- Stat 1: Sunrise / Sunset -->
+        <div class="flex-1">
+          <p
+            id="sun-label"
+            class="text-[10px] font-bold uppercase tracking-wider opacity-60"
+          >
+            SUNRISE
+          </p>
+          <p id="sun-time" class="text-lg mt-1">7:00</p>
+        </div>
+
+        <div class="w-px h-8 bg-current opacity-20"></div>
+        <!-- Vertical Divider -->
+
+        <!-- Stat 2: Wind -->
+        <div class="flex-1">
+          <p class="text-[10px] font-bold uppercase tracking-wider opacity-60">
+            WIND
+          </p>
+          <p id="wind-speed" class="text-lg mt-1">4m/s</p>
+        </div>
+
+        <div class="w-px h-8 bg-current opacity-20"></div>
+        <!-- Vertical Divider -->
+
+        <!-- Stat 3: Feels Like Temp -->
+        <div class="flex-1">
+          <p class="text-[10px] font-bold uppercase tracking-wider opacity-60">
+              TEMPRATURE
+          </p>
+          <p id="feels-like" class="text-lg mt-1">23°</p>
+        </div>
+      </div>
+    </div>
+
+    
+    <script src="index.js"></script>
+  </body>
+</html>
