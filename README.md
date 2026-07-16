@@ -27,7 +27,7 @@ A responsive weather application that retrieves real-time weather information us
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/zavithibrahim4-art/whether-app>
 ```
 
 Open the project folder and launch `index.html` using Live Server or any local web server.
